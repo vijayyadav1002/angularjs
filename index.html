@@ -6,7 +6,11 @@
 </head>
 <body>
 <div ng-app="behaviour">
-<div enter="alert-box">enter into me</div>
+<div ng-controller="TwitterCtrl">
+  <input ng-model="message"/>
+  {{message}}
+  <div enter="fireMe()">enter into me</div>
+</div>
 </div>
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="main.js"></script>
