@@ -5,13 +5,19 @@
   <link rel="stylesheet" type="text/css" href="bower_components/foundation/css/foundation.css">
 </head>
 <body>
-<div ng-app="behaviour">
-<div ng-controller="TwitterCtrl">
-  <input ng-model="message"/>
-  {{message}}
-  <div enter="fireMe()">enter into me</div>
+<div ng-app="superheroapp">
+<div>
+  <superhero strength flight>Superman</superhero>
 </div>
+<div>
+  <superhero strength>Hulk</superhero>
 </div>
+<div>
+  <superhero speed>Flash</superhero>
+</div>  
+<!-- <superhero speed>The flash</superhero>
+<superhero strength>Hulk</superhero>
+ --></div>
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="main.js"></script>
 </body>
