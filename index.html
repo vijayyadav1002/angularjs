@@ -5,19 +5,13 @@
   <link rel="stylesheet" type="text/css" href="bower_components/foundation/css/foundation.css">
 </head>
 <body>
-<div ng-app="superheroapp">
-<div>
-  <superhero strength flight>Superman</superhero>
+
+<div ng-app="choreApp">
+  <div ng-controller="choreCtrl">
+    <kid done="logCtrl(chore)"></kid>
+  </div>
 </div>
-<div>
-  <superhero strength>Hulk</superhero>
-</div>
-<div>
-  <superhero speed>Flash</superhero>
-</div>  
-<!-- <superhero speed>The flash</superhero>
-<superhero strength>Hulk</superhero>
- --></div>
+
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
 <script type="text/javascript" src="main.js"></script>
 </body>

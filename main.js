@@ -1,63 +1,19 @@
-var app = angular.module('superheroapp', []);
+var app = angular.module('choreApp', []);
 
-app.directive('superhero', [function(){
-  // Runs during compile
-  return {
-    restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-    scope: {}, //defined empty to isolate the scope from other directives
-    controller: ['$scope', function($scope) {
-      $scope.powers = [];
-      this.addSpeed = function () {
-        $scope.powers.push('speed');
-      };
-      this.addFlight = function () {
-        $scope.powers.push('flight');
-      };
-      this.addStrength = function () {
-        $scope.powers.push('strength');
-      };
-      $scope.showItems = function () {
-        console.log($scope.powers);
-      }
-    }],
-    link: function($scope, iElm, iAttrs, controller) {
-      console.log($scope.powers);
-      iElm.bind('click', function(){
-        $scope.showItems();
-      });
+app.controller('choreCtrl', ['$scope', function($scope){
+    $scope.logCtrl = function (chore) {
+      console.log(chore + " is done!");
     }
-  };
 }]);
 
-app.directive('strength', function(){
-  // Runs during compile
-  return {
-    restrict: 'A',
-    require: 'superhero', // Array = multiple requires, ? = optional, ^ = check parent elements
-    link: function($scope, iElm, iAttrs, controller) {
-      controller.addStrength();
-    }
-  };
-});
 
-app.directive('flight', function(){
-  // Runs during compile
-  return {
-    restrict: 'A',
-    require: 'superhero', // Array = multiple requires, ? = optional, ^ = check parent elements
-    link: function($scope, iElm, iAttrs, controller) {
-      controller.addFlight();
-    }
-  };
-});
+app.directive('kid', [function(){
 
-app.directive('speed', function(){
-  // Runs during compile
   return {
-    restrict: 'A',
-    require: 'superhero', // Array = multiple requires, ? = optional, ^ = check parent elements
-    link: function($scope, iElm, iAttrs, controller) {
-      controller.addSpeed();
-    }
+    scope: {
+      done: '&', //this & represent that done attribute in the directive is an expression
+    }, // {} = isolate, true = child, false/undefined = no change
+    restrict: 'E',
+    template: '<input type="text" ng-model="chore"/> <div>{{chore}}</div> <div class="button" ng-click="done({chore:chore})">Click ME</div>'  // we need to pass parameter to function logCtrl using object notation {chore:chore}
   };
-});
+}]);
