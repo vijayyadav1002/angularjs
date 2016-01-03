@@ -8,8 +8,12 @@
 
 <div ng-app="drinkApp">
   <div ng-controller="drinkCtrl">
+    Ctrl
     <input type="text" ng-model="yourFlavour"/>
-    <div drink flavour="{{yourFlavour}}"></div>
+    {{yourFlavour}}
+    <hr/>
+    Dir
+    <div drink flavour="yourFlavour"></div>  <!-- as you are binding the model you no longer needed to double bracket them-->
   </div>
 </div>
 
