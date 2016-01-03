@@ -8,7 +8,12 @@
 
 <div ng-app="phoneApp">
   <div ng-controller="phoneCtrl">
-    <div phone dial="callHome(message)"></div>
+    change netwoek from here
+    <input type="text" ng-model="network"/>
+    <hr/>
+    <phone number="4444" network="network" make-call="leaveVoiceMessage(number, message)"></phone>
+    <phone number="5555" network="network" make-call="leaveVoiceMessage(number, message)"></phone>
+    <phone number="6666" network="network" make-call="leaveVoiceMessage(number, message)"></phone>
   </div>
 </div>
 

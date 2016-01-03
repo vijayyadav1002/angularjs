@@ -1,22 +1,28 @@
 var app = angular.module('phoneApp', []);
 
 app.controller('phoneCtrl', ['$scope', function($scope){
-  $scope.callHome = function(message) {
-    console.log(message);
+  $scope.leaveVoiceMessage = function(number, message) {
+    console.log("calling at " + number + ":" +message + " |->network:" + $scope.network);
   };
 }]);
 
 app.directive('phone', [function(){
   return {
+    restrict: 'E',
     scope: {
-      dial: '&',
+      number: '@',
+      network: "=",
+      makeCall: '&'
     },
-    template: '<input type="text" ng-model="value"/>' + 
-    '<div class="button" ng-click="dial({message: value})">Call home</div>'
+    template: '<div class="panel">' + 
+      '<div>Numbe is {{number}}</div>' + 
+      '<select ng-model="network"><option ng-repeat="nt in networks">{{nt}}</option></select>' +
+      '<input type="text" ng-model="message"/>' +
+      '<div class="button" ng-click="makeCall({number:number, message:message})">Call Home</div>'
+    ,
+    link: function(scope) {
+      scope.networks = ['Airtel', 'IDEA', 'Vodafone'];
+      scope.network = scope.networks[0];
+    }
   };
 }]);
-
-/**
- *  Note: The message property should have the same name as passed from the html callHome function
- * to get passed.
- */
