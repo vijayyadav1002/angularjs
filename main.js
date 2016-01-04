@@ -3,14 +3,13 @@ var app = angular.module('phoneApp', []);
 app.controller('phoneCtrl', ['$scope', function($scope){
 }]);
 
-app.directive('zippy', [function(){
-  // Runs during compile
+app.directive('zippy', ['$templateCache', function(cache){
   return {
     scope: {
       title: '@'
     }, // {} = isolate, true = child, false/undefined = no change
     restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-    templateUrl: 'zippy.html',
+    template: cache.get('zippy.html'),
     transclude: true,
     link: function($scope) {
       $scope.isContentVisible = false;
@@ -21,4 +20,9 @@ app.directive('zippy', [function(){
   };
 }]);
 
+/**
+ * note:
+ * 1. all the script templates are loaded into templateCache 
+ * 2. one can retreive them using the key
+ */
 

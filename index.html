@@ -7,6 +7,12 @@
 <body>
 
 <div ng-app="phoneApp">
+  <script type="text/ng-template" id="zippy.html">
+      <div class="pannel">
+        <div ng-click="toggleContent()">{{title}}</div>
+        <div ng-show="isContentVisible" ng-transclude></div>
+      </div>
+  </script>
   <div ng-controller="phoneCtrl">
   <input type="text" ng-model="model.title"/>
   <input type="text" ng-model="model.content"/>
