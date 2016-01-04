@@ -1,31 +1,21 @@
-var app = angular.module('phoneApp', []);
+var app = angular.module('app', ['ngRoute']);
 
-app.controller('phoneCtrl', ['$scope', function($scope){
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/app', {
+    templateUrl: "app.html",
+    controller: "AppCtrl"
+  });
 }]);
 
-app.run(['$templateCache', function(cache){
-  cache.put("zippy.html", '<div class="pannel"><div ng-click="toggleContent()">{{title}}</div><div ng-show="isContentVisible" ng-transclude></div></div>');
-}])
-
-app.directive('zippy', ['$templateCache', function(cache){
-  return {
-    scope: {
-      title: '@'
-    }, // {} = isolate, true = child, false/undefined = no change
-    restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-    template: cache.get('zippy.html'),
-    transclude: true,
-    link: function($scope) {
-      $scope.isContentVisible = false;
-      $scope.toggleContent = function() {
-        $scope.isContentVisible = !$scope.isContentVisible;
-      };
-    }
-  };
+app.controller('AppCtrl', ['$scope', function($scope){
+  $scope.model = {
+    message: "This is my app"
+  }
 }]);
+
 
 /**
- * note:
- * 1. you can manually put the template into tempateCache using run method
+ * Note: 
+ * 1. To include route one must load ngRoute module first
+ * 2. Also important than you include angular-route.js in the script tag
  */
-
