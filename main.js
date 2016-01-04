@@ -3,6 +3,10 @@ var app = angular.module('phoneApp', []);
 app.controller('phoneCtrl', ['$scope', function($scope){
 }]);
 
+app.run(['$templateCache', function(cache){
+  cache.put("zippy.html", '<div class="pannel"><div ng-click="toggleContent()">{{title}}</div><div ng-show="isContentVisible" ng-transclude></div></div>');
+}])
+
 app.directive('zippy', ['$templateCache', function(cache){
   return {
     scope: {
@@ -22,7 +26,6 @@ app.directive('zippy', ['$templateCache', function(cache){
 
 /**
  * note:
- * 1. all the script templates are loaded into templateCache 
- * 2. one can retreive them using the key
+ * 1. you can manually put the template into tempateCache using run method
  */
 
