@@ -8,7 +8,9 @@
 
 <div ng-app="phoneApp">
   <div ng-controller="phoneCtrl">
-    <div class="button" ng-click="phoneCtrl.clickMe()">Click me</div>
+  <input type="text" ng-model="model.title"/>
+  <input type="text" ng-model="model.content"/>
+  <zippy title="{{model.title}}">This content is : {{model.content}}</zippy>
    </div>
 </div>
 
