@@ -7,8 +7,13 @@
 <body>
 
 <div ng-app="app">
-  <div class="button" ng-repeat="item in 'somewords'.split('') track by $index" ng-click="$log.debug($event)">
-    <div>{{$index + 1}}: {{item}}</div>
+  <div ng-controller="Ctrl1 as c1">
+    {{c1.foo}}
+    <div class="button" ng-click="c1.checkMe()">Click ME</div>
+    <div ng-controller="Ctrl2 as c2">
+      {{c1.foo}}
+      {{c2.foo}}
+    </div>
   </div>
 </div>
 
