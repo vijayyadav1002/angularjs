@@ -4,27 +4,21 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/app', {
     templateUrl: "app.html",
-    controller: "AppCtrl"
+    controller: "AppCtrl",
+    resolve: {
+    	app: ['$q', '$timeout',  function(q, timeout) {
+				var defer = q.defer();
+				timeout(function(){
+					defer.resolve();
+				}, 1000);
+
+				return defer.promise;
+    	}]
+    }
   });
 }]);
 
-app.controller('AppCtrl', ['$scope', '$q', function($scope, $q){
-	var defer = $q.defer();
-	defer.promise
-		.then(function(weapon){
-			console.log("You can have my " + weapon);
-			return 'bow';
-		})
-		.then(function(weapon){
-			console.log("You can have my " + weapon);
-			return 'arrow';
-		})
-		.then(function(weapon){
-			console.log("You can have my " + weapon);
-		});
-
-	defer.resolve('sword');
-
+app.controller('AppCtrl', ['$scope', function($scope){
   $scope.model = {
     message: "This is awesome app!! "
   }
@@ -32,5 +26,5 @@ app.controller('AppCtrl', ['$scope', '$q', function($scope, $q){
 
 
 /**
- * Note: 
+ * Note: only if promise gets resolved than only controller will execute
  */
