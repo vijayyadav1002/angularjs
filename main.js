@@ -20,4 +20,9 @@ var viewCtrl = app.controller('AppCtrl', ['$scope', '$injector', function($scope
 	}]);
 }]);
 
+/**
+	* Note:
+	* Only one injector is allowed for one application
+	*/
+
 
