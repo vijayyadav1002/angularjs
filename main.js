@@ -3,8 +3,15 @@ var app = angular.module('app', ['ngRoute']);
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/app', {
-    templateUrl: "app.html",
-    controller: "viewCtrl",
+    templateUrl: "view/app.html",
+    controller: "ViewCtrl",
+    resolve: {
+    	loadData: viewCtrl.loadData
+    }
+  })
+  .when('/new', {
+  	templateUrl:'view/new.html',
+  	controller: 'NewCtrl',
     resolve: {
     	loadData: viewCtrl.loadData
     }
@@ -14,6 +21,12 @@ app.config(['$routeProvider', function($routeProvider) {
 app.controller('AppCtrl', ['$rootScope', function(rootScope){
 	rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
 		console.log("!!" + rejection);
+	});
+	rootScope.$on('$routeChangeStart', function(event, current, previous, rejection){
+		console.log("!! change start");
+	});
+	rootScope.$on('$routeChangeSuccess', function(event, current, previous, rejection){
+		console.log("!!chnage success");
 	});
 }]);
 
@@ -31,17 +44,26 @@ app.directive('error', ['$rootScope', function(rootScope) {
 }]);
 
 
-var viewCtrl = app.controller('ViewCtrl', ['$scope', '$route',  function($scope, $route){
-	console.log($route);
+var viewCtrl = app.controller('ViewCtrl', ['$scope', '$location',  function($scope, $location){
+	console.log($location);
   $scope.model = {
     message: "This is awesome app!! "
   }
+
+  $scope.changeView = function() {
+  	$location.path('/new');
+  };
 }]);
+
+app.controller('NewCtrl', ['loadData', function(loadData) {
+	console.log("NewCtrl :" + loadData);
+}]);
+
 
 viewCtrl.loadData = ['$q', '$timeout',  function(q, timeout) {
 	var defer = q.defer();
 	timeout(function(){
-		defer.reject("failed loading data");
+		defer.resolve("loaded data");
 	}, 1000);
 
 	return defer.promise;
