@@ -5,25 +5,26 @@ app.config(['$routeProvider', function($routeProvider) {
   .when('/app', {
     templateUrl: "app.html",
     controller: "AppCtrl"
-  })
-  .when('/pizza/:crust/:topping', {
-    redirectTo: function(routeParams, path, search) {
-			console.log(routeParams);
-			console.log(path);
-			console.log(search);
-			return "/" + routeParams.crust;
-    }
-  })
-  .when('/deep', {
-  	template: 'deep dish'
-  })
-  .otherwise({
-  	redirectTo: '/app'
   });
-
 }]);
 
-app.controller('AppCtrl', ['$scope', '$routeParams', function($scope, $routeParams){
+app.controller('AppCtrl', ['$scope', '$q', function($scope, $q){
+	var defer = $q.defer();
+	defer.promise
+		.then(function(weapon){
+			console.log("You can have my " + weapon);
+			return 'bow';
+		})
+		.then(function(weapon){
+			console.log("You can have my " + weapon);
+			return 'arrow';
+		})
+		.then(function(weapon){
+			console.log("You can have my " + weapon);
+		});
+
+	defer.resolve('sword');
+
   $scope.model = {
     message: "This is awesome app!! "
   }
