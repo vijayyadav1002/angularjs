@@ -7,7 +7,9 @@
 <body>
 
 <div ng-app="app">
-  <div ng-controller="AppCtrl">{{model.message}}</div>
+  <div class="button" ng-repeat="item in 'somewords'.split('') track by $index" ng-click="$log.debug($event)">
+    <div>{{$index + 1}}: {{item}}</div>
+  </div>
 </div>
 
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
