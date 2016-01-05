@@ -6,25 +6,39 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: "app.html",
     controller: "AppCtrl",
     resolve: {
-    	app: ['$q', '$timeout',  function(q, timeout) {
-				var defer = q.defer();
-				timeout(function(){
-					defer.resolve();
-				}, 1000);
-
-				return defer.promise;
-    	}]
+    	loadData: appCtrl.loadData,
+    	prepareData: appCtrl.prepareData
     }
   });
 }]);
 
-app.controller('AppCtrl', ['$scope', function($scope){
+var appCtrl = app.controller('AppCtrl', ['$scope', '$route',  function($scope, $route){
+	console.log($route);
   $scope.model = {
     message: "This is awesome app!! "
   }
 }]);
 
+appCtrl.loadData = ['$q', '$timeout',  function(q, timeout) {
+	var defer = q.defer();
+	timeout(function(){
+		defer.resolve("loadedData");
+	}, 1000);
+
+	return defer.promise;
+}];
+
+appCtrl.prepareData = ['$q', '$timeout',  function(q, timeout) {
+	var defer = q.defer();
+	timeout(function(){
+		defer.resolve("preparedData");
+	}, 1000);
+
+	return defer.promise;
+}];
 
 /**
- * Note: only if promise gets resolved than only controller will execute
+ * Note:
+ * 1. $route will contain the loaddata and preparedata string under its current locals object
+ * 2. verify it by checking logs
  */
