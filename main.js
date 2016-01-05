@@ -4,41 +4,38 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider
   .when('/app', {
     templateUrl: "app.html",
-    controller: "AppCtrl",
+    controller: "viewCtrl",
     resolve: {
-    	loadData: appCtrl.loadData,
-    	prepareData: appCtrl.prepareData
+    	loadData: viewCtrl.loadData
     }
   });
 }]);
 
-var appCtrl = app.controller('AppCtrl', ['$scope', '$route',  function($scope, $route){
+app.controller('AppCtrl', ['$rootScope', function(rootScope){
+	rootScope.$on('$routeChangeError', function(event, current, previous, rejection){
+		console.log("!!" + rejection);
+	});
+}]);
+
+var viewCtrl = app.controller('ViewCtrl', ['$scope', '$route',  function($scope, $route){
 	console.log($route);
   $scope.model = {
     message: "This is awesome app!! "
   }
 }]);
 
-appCtrl.loadData = ['$q', '$timeout',  function(q, timeout) {
+viewCtrl.loadData = ['$q', '$timeout',  function(q, timeout) {
 	var defer = q.defer();
 	timeout(function(){
-		defer.resolve("loadedData");
+		defer.reject("failed loading data");
 	}, 1000);
 
 	return defer.promise;
 }];
 
-appCtrl.prepareData = ['$q', '$timeout',  function(q, timeout) {
-	var defer = q.defer();
-	timeout(function(){
-		defer.resolve("preparedData");
-	}, 1000);
-
-	return defer.promise;
-}];
 
 /**
  * Note:
- * 1. $route will contain the loaddata and preparedata string under its current locals object
- * 2. verify it by checking logs
+ * 1. $routeChangeError is called when promise failed or rejected
+ * 2. Root Controller should handle the error using rootScope
  */
