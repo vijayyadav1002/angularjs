@@ -1,15 +1,4 @@
-var app = angular.module('app', []);
-
-app.provider("superhero", function() {
-	return {
-		$get: function() {
-			return {
-				superhero: "Shaktiman"
-			}
-		}
-	}
-});
-
+var app = angular.module('app', ['ngRoute']);
 
 app.factory("game", function() {
 	return {
@@ -17,40 +6,18 @@ app.factory("game", function() {
 	}
 });
 
-app.provider("play", function() {
-	var type;
-	return {
-		setType: function(value) {
-			type = value;
-		},
-		$get: function() {
-			return {
-				title: type + "Craft"
-			}
-		}
-	}
-});
-
-app.config(['$provide', 'playProvider', function(provide, playProvider) {
-	provide.factory("gem", function() {
-		return {
-			gem: 'Ruby'
-		}
-	});
-
-	playProvider.setType("War");
+angular.injector(['app']).invoke(['game', function(game) {
+	console.log("injector", game);
 }]);
 
 
 
-var viewCtrl = app.controller('AppCtrl', ['$scope', 'game', 'gem', 'superhero', 'play',
- function($scope, game, gem, superhero, play){
-	console.log(game);
-	console.log(gem);
-	console.log(superhero);
-  $scope.model = {
-    message: play.title
-  }
+var viewCtrl = app.controller('AppCtrl', ['$scope', '$injector', function($scope, injector){
+	injector.invoke(['game', function(game){
+		  $scope.model = {
+        message: game.game
+      }
+	}]);
 }]);
 
 
